@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Test2 {
 
@@ -21,13 +22,27 @@ public class Test2 {
         students.add(st5);
         System.out.println(students);
 
-        students = students.stream().filter(e ->
-                e.getAge() > 22 && e.getAvrGrade() < 7.3).collect(Collectors.toList());
+        students.stream().map(e -> {
+            e.setName(e.getName().toUpperCase());
+            return e;
+        }).filter(e -> e.getSex() == 'f').sorted((x, y) -> x.getAge() - y.getAge()).forEach(e -> System.out.println(e));
+
+
+//        students = students.stream().filter(e ->
+//                e.getAge() > 22 && e.getAvrGrade() < 7.3).collect(Collectors.toList());
 
         System.out.println(students);
 
         int ar[] = {1, 2, 3, 4, 5, 6};
         System.out.println(Arrays.toString(Arrays.stream(ar).filter(e -> e % 2 == 0).toArray()));
+
+//        Stream<Student> myStream = Stream.of(st1, st2, st3, st4, st5);
+//
+//        students = myStream.filter(e -> e.getAge() > 22 && e.getAvrGrade() < 7.4).collect(Collectors.toList());
+//        System.out.println(students);
+
+        students = students.stream().sorted((x, y) -> x.getName().compareTo(y.getName())).collect(Collectors.toList());
+        System.out.println(students);
     }
 }
 
@@ -54,7 +69,8 @@ class Student {
                 ", age=" + age +
                 ", course=" + course +
                 ", avrGrade=" + avrGrade +
-                '}';
+                '}' +
+                '\n';
     }
 
     public String getName() {
